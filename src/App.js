@@ -35,15 +35,15 @@ const App = () => {
     const [analysisData, setAnalysisData] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
-    const [subscription, setSubscription] = useState('jonas-enterprise'); // Example subscription
+    const subscription = 'jonas-enterprise'; // Example subscription
 
     // useEffect hook to fetch data when the component mounts
     useEffect(() => {
         const fetchData = async () => {
             try {
-                // In a real Static Web App, this would fetch from '/api/get-reservation-analysis'
-                // For demonstration, we'll simulate a fetch with the mock data.
-                // To connect to a real backend, replace the mock logic with:
+                // The relative URL '/api/get-reservation-analysis' fails in environments
+                // without a proxy. Simulating the fetch with mock data for now.
+                // When deployed to Azure Static Web Apps, the real fetch will work.
                 // const response = await fetch('/api/get-reservation-analysis');
                 // if (!response.ok) {
                 //     throw new Error(`HTTP error! status: ${response.status}`);
@@ -63,6 +63,7 @@ const App = () => {
                 await new Promise(resolve => setTimeout(resolve, 1500)); // Simulate network delay
                 setAnalysisData(mockData);
                 // --- End Mock Data Simulation ---
+
 
             } catch (e) {
                 setError(e.message);
@@ -106,7 +107,6 @@ const App = () => {
     const totalInstanceTypes = analysisData.length;
     const underReserved = analysisData.filter(row => row.gap > 0);
     const overReserved = analysisData.filter(row => row.gap < 0);
-    const perfectMatchesList = analysisData.filter(row => row.status === 'Perfect Match');
 
     // --- Render the main dashboard ---
     return (

@@ -41,17 +41,16 @@ const App = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                // The relative URL '/api/get-reservation-analysis' fails in environments
-                // without a proxy. Simulating the fetch with mock data for now.
-                // When deployed to Azure Static Web Apps, the real fetch will work.
-                // const response = await fetch('/api/get-reservation-analysis');
-                // if (!response.ok) {
-                //     throw new Error(`HTTP error! status: ${response.status}`);
-                // }
-                // const data = await response.json();
-                // setAnalysisData(data);
+                /* --- This is the live API call to your Azure Function backend. (Commented out for preview) ---
+                const response = await fetch('/api/get-reservation-analysis');
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const data = await response.json();
+                setAnalysisData(data);
+                */
 
-                // --- Start Mock Data Simulation ---
+                // --- Start Mock Data Simulation (Active for preview) ---
                 const mockData = [
                     { vmSize: 'Standard_D16s_v3', location: 'Canada Central', actual: 10, reserved: 11, gap: -1, coverage: 110, status: 'Over-reserved' },
                     { vmSize: 'Standard_D8s_v3', location: 'Canada Central', actual: 10, reserved: 9, gap: 1, coverage: 90, status: 'Under-reserved' },

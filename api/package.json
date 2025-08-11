@@ -1,0 +1,17 @@
+{
+  "name": "api",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@azure/arm-compute": "^23.0.0",
+    "@azure/arm-reservations": "^9.0.0",
+    "@azure/identity": "^4.11.1"
+  }
+}

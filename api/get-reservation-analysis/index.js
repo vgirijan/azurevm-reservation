@@ -2,7 +2,8 @@
 
 const { DefaultAzureCredential } = require("@azure/identity");
 const { ComputeManagementClient } = require("@azure/arm-compute");
-const { ReservationManagementClient } = require("@azure/arm-reservations");
+// Corrected the client name to use the plural 'Reservations'
+const { ReservationsManagementClient } = require("@azure/arm-reservations");
 
 // --- Main Function Logic ---
 async function run(context, req) {
@@ -21,7 +22,8 @@ async function run(context, req) {
         }
 
         const computeClient = new ComputeManagementClient(credential, subscriptionId);
-        const reservationClient = new ReservationManagementClient(credential, subscriptionId);
+        // Corrected the instantiation to use the plural 'ReservationsManagementClient'
+        const reservationClient = new ReservationsManagementClient(credential, subscriptionId);
 
         // 2. DATA FETCHING
         // Get all virtual machines in the subscription

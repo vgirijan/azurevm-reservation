@@ -41,29 +41,15 @@ const App = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                /* --- This is the live API call to your Azure Function backend. (Commented out for preview) ---
+                // --- This is the live API call to your Azure Function backend. ---
                 const response = await fetch('/api/get-reservation-analysis');
                 if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
+                    const errorBody = await response.text();
+                    throw new Error(`HTTP error! status: ${response.status}, body: ${errorBody}`);
                 }
                 const data = await response.json();
                 setAnalysisData(data);
-                */
-
-                // --- Start Mock Data Simulation (Active for preview) ---
-                const mockData = [
-                    { vmSize: 'Standard_D16s_v3', location: 'Canada Central', actual: 10, reserved: 11, gap: -1, coverage: 110, status: 'Over-reserved' },
-                    { vmSize: 'Standard_D8s_v3', location: 'Canada Central', actual: 10, reserved: 9, gap: 1, coverage: 90, status: 'Under-reserved' },
-                    { vmSize: 'Standard_D4s_v3', location: 'Canada Central', actual: 20, reserved: 18, gap: 2, coverage: 90, status: 'Under-reserved' },
-                    { vmSize: 'Standard_D2s_v3', location: 'Canada Central', actual: 5, reserved: 5, gap: 0, coverage: 100, status: 'Perfect Match' },
-                    { vmSize: 'Standard_L32s_v3', location: 'Canada Central', actual: 1, reserved: 1, gap: 0, coverage: 100, status: 'Perfect Match' },
-                    { vmSize: 'Standard_D16s_v4', location: 'US Central', actual: 32, reserved: 32, gap: 0, coverage: 100, status: 'Perfect Match' },
-                ];
-                await new Promise(resolve => setTimeout(resolve, 1500)); // Simulate network delay
-                setAnalysisData(mockData);
-                // --- End Mock Data Simulation ---
-
-
+                
             } catch (e) {
                 setError(e.message);
                 console.error("Failed to fetch analysis data:", e);

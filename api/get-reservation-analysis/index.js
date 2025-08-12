@@ -9,13 +9,6 @@ async function run(context, req) {
     context.log('JavaScript HTTP trigger function processed a request.');
 
     try {
-        // --- DEBUGGING STEP ---
-        // Let's log the entire contents of the reservations package to see what's available.
-        context.log("--- RESERVATIONS PACKAGE CONTENTS ---");
-        context.log(require("@azure/arm-reservations"));
-        context.log("-------------------------------------");
-
-
         // 1. AUTHENTICATION
         const credential = new DefaultAzureCredential();
         const subscriptionId = process.env.AZURE_SUBSCRIPTION_ID;

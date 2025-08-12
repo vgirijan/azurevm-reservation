@@ -2,7 +2,8 @@
 
 const { DefaultAzureCredential } = require("@azure/identity");
 const { ComputeManagementClient } = require("@azure/arm-compute");
-const { ReservationManagementClient } = require("@azure/arm-reservations");
+// Import the entire reservations package as a single object
+const reservations = require("@azure/arm-reservations");
 
 // --- Main Function Logic ---
 async function run(context, req) {
@@ -18,7 +19,8 @@ async function run(context, req) {
         }
 
         const computeClient = new ComputeManagementClient(credential, subscriptionId);
-        const reservationClient = new ReservationManagementClient(credential, subscriptionId);
+        // Instantiate the client by accessing it as a property of the imported package
+        const reservationClient = new reservations.ReservationManagementClient(credential, subscriptionId);
 
         // 2. DATA FETCHING
         const vmList = [];
@@ -31,9 +33,11 @@ async function run(context, req) {
             const reservationOrderId = order.name;
             const reservationsInOrder = await reservationClient.reservation.list(reservationOrderId);
             for await (const reservation of reservationsInOrder) {
+                // We only care about active VM reservations for this subscription
                 if (reservation.properties.appliedScopes && reservation.properties.appliedScopes.includes(subscriptionId) && reservation.properties.provisioningState === "Succeeded") {
                      reservationList.push(reservation);
                 } else if (reservation.properties.appliedScopeType === "Single" && reservation.properties.provisioningState === "Succeeded") {
+                    // Also include single-scope reservations that don't list the subscription ID but are scoped to it by default
                     reservationList.push(reservation);
                 }
             }
